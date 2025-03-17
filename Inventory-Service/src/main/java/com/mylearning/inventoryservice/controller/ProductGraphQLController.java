@@ -29,8 +29,8 @@ public class ProductGraphQLController {
     }
 
     @QueryMapping
-    public ResponseEntity<List<Product>> getProductsByCategory(@Argument String category) {
-        return ResponseEntity.ok(productService.getProductsByCategory(category));
+    public List<Product> getProductsByCategory(@Argument String category) {
+        return productService.getProductsByCategory(category);
     }
 
     @QueryMapping

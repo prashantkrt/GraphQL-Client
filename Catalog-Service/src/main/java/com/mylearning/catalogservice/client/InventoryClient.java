@@ -5,14 +5,17 @@ import com.mylearning.catalogservice.dto.ItemDto;
 import com.mylearning.catalogservice.dto.ItemRequestDto;
 import com.mylearning.catalogservice.dto.ItemResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class InventoryClient {
 
     private final HttpGraphQlClient httpGraphQlClient;
@@ -41,7 +44,11 @@ public class InventoryClient {
                 "    }\n" +
                 "}\n", category);
 
-        Mono<List<ItemCategoryDto>> getAllProducts = httpGraphQlClient.document(query).retrieve("getProductsByCategory").toEntityList(ItemCategoryDto.class);
+        Mono<List<ItemCategoryDto>> getAllProducts = httpGraphQlClient.document(query).retrieve("getProductsByCategory").toEntityList(ItemCategoryDto.class)
+                .onErrorResume(error -> {
+            log.error("Error fetching products by category: {}", category, error);
+            return Mono.just(Collections.emptyList());
+        });
         return getAllProducts.block();
     }
 

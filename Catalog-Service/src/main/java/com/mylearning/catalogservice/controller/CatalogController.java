@@ -23,7 +23,7 @@ public class CatalogController {
     }
 
     @GetMapping("/{category}")
-    public List<ItemCategoryDto> getProductsByCategory(String category) {
+    public List<ItemCategoryDto> getProductsByCategory(@PathVariable String category) {
         return catalogService.getProductsByCategory(category);
     }
 
@@ -33,7 +33,7 @@ public class CatalogController {
     }
 
     @GetMapping("/{id}/{quantity}")
-    public ItemCategoryDto updateStock(Integer id, Integer quantity) {
+    public ItemCategoryDto updateStock(@PathVariable Integer id,@PathVariable Integer quantity) {
         return catalogService.updateStock(id, quantity);
     }
 
