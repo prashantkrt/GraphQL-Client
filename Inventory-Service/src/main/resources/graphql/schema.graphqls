@@ -1,0 +1,79 @@
+type Product{
+    id: ID
+    name: String
+    category: String
+    price: Float
+    quantity: Int
+    description: String
+}
+
+type Query{
+    getAllProducts: [Product]
+    getProductById(id: ID!): Product
+    getProductsByCategory(category: String!): [Product]
+    getProductByPriceRange(minPrice: Float!, maxPrice: Float!): [Product]
+}
+
+#query{
+#    getProductById(id:1){
+#        id
+#        name
+#        category
+#    }
+#}
+
+input ProductInput {
+    name: String!
+    category: String!
+    price: Float!
+    quantity: Int!
+    description: String!
+}
+
+type Mutation{
+    updateStock(id: ID!, quantity: Int!): Product
+    receiveNewShipment(id: ID!, quantity: Int!): Product
+    addProduct(product: ProductInput!): Product
+}
+
+#mutation {
+#    updateStock(id: 1, quantity: 34) {
+#        id
+#    }
+#}
+
+#mutation {
+#    addProduct(product: {
+#        name: "Laptop",
+#        category: "Electronics",
+#        price: 1200.99,
+#        quantity: 10,
+#        description: "High-performance gaming laptop"
+#    }) {
+#        id
+#        name
+#        category
+#        price
+#        quantity
+#        description
+#    }
+#}
+
+#mutation AddProduct {
+#    addProduct(
+#        product: {
+#            name: "Duster"
+#            category: "Accessories"
+#            price: 120.0
+#            quantity: 2
+#            description: "White/Black boad duster"
+#        }
+#    ) {
+#        id
+#        name
+#        category
+#        price
+#        quantity
+#        description
+#    }
+#}
